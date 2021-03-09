@@ -31,6 +31,7 @@
 | PTC2         |      1 |       15 |            8150 |
 | pTC3         |      2 |       16 |           12200 |
 
+
 | Negative TCs | Colour | Distance | Expected Output |
 | nTC1         |     -1 |        0 | Exception       |
 | nTC2         |      0 |       -1 | Exception       |
