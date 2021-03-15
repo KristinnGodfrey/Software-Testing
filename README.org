@@ -1,5 +1,5 @@
 | title                                                      | type             | src/main files | src/test files |
-| <10>                                                       |                  |                |                |
+| <30>                                                       |                  |                |                |
 |------------------------------------------------------------+------------------+----------------+----------------|
 | equivalence class partitioning and boundary value analysis | manual           |                |                |
 | junit - mockito and pit                                    | automated (java) | [[./java-junit-mockito-and-pit/main/Money.java][1]], [[./java-junit-mockito-and-pit/main/MoneyStack.java][2]], [[./java-junit-mockito-and-pit/main/MoneyStackMain.java][3]]        | [[./java-junit-mockito-and-pit/test/MoneyStackTest.java][1]], [[./java-junit-mockito-and-pit/test/MoneyStackWithMockTest.java][2]], [[./java-junit-mockito-and-pit/test/MoneyTest.java][3]]        |
