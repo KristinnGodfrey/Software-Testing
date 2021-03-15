@@ -36,10 +36,11 @@ public class MoneyStack {
     }
 
     public boolean isEmpty() {
-        if (theStack.length == 0) {
+        if (nextPushLocation == 0) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public int getTheCapacity() {
@@ -47,6 +48,6 @@ public class MoneyStack {
     }
 
     public int getCurrentSize() {
-        return theStack.length;
+        return nextPushLocation;
     }
 }

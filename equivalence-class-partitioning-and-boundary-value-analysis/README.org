@@ -39,6 +39,7 @@
 
 ** 3. Additional concrete test cases to achieve output coverage
 
+
 |     | 1st param | 2nd param | Expected output |
 |-----+-----------+-----------+-----------------|
 | TC1 |         0 |        16 |           21100 |

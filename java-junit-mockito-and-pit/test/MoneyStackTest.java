@@ -30,7 +30,7 @@ public class MoneyStackTest {
 
     @Test
     public void isFull() {
-        for (int i = 0; i < ms.getTheCapacity() - 1; i++) {
+        for (int i = 0; i < ms.getTheCapacity(); i++) {
             assertFalse(ms.isFull());
             ms.push(a);
         }
@@ -46,9 +46,44 @@ public class MoneyStackTest {
         ms.push(a);
     }
 
+    @Test
+    public void testCompareMoney() {
+
+    }
+
     @SuppressFBWarnings("UC_USELESS_OBJECT")
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testPopOnEmptyStack() {
         ms.pop();
+    }
+
+    @Test
+    public void testMoneyFalse() {
+        Money b = new Money(2);
+        String a = "hello";
+        assertFalse(b.equals(a));
+    }
+
+    @Test
+    public void testToString() {
+        Money a = new Money(2);
+
+        assertEquals("2", a.toString());
+    }
+
+    @Test
+    public void testisEmpty() {
+        assertTrue(ms.isEmpty());
+        ms.push(a);
+        assertFalse(ms.isEmpty());
+    }
+
+    @Test
+    public void testGetCurrentSize() {
+        assertEquals(0, ms.getCurrentSize());
+        ms.push(a);
+        assertEquals(1, ms.getCurrentSize());
+        ms.push(b);
+        assertEquals(2, ms.getCurrentSize());
     }
 }

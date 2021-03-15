@@ -27,7 +27,7 @@ public class MoneyStackWithMockTest {
         for (int i = 0; i < testLength; i++) {
             ms.push(a);
         }
-        assertEquals(ms.sum(), testLength * 1);
+        assertEquals(ms.sum(), testLength);
     }
 
     @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
@@ -41,7 +41,5 @@ public class MoneyStackWithMockTest {
         when(myMock.getAmount()).thenReturn(1);
         assertEquals(testLength * 1, ms.sum());
         verify(myMock, times(testLength)).getAmount();
-
-
     }
 }
