@@ -5,12 +5,10 @@ Given a list of names and phone
 Make a phonebook 
 - Detetermine if it is consistent
 - no number is a prefix of another, example:
-
-#+begin_comment
 Bob 91125426, Anna 97625992
 Emergency 911
 Bob and Emergency are inconsistent
-#+end_comment
+
 
 ** Documentation
 [[https://docs.python.org/3/library/unittest.html#test-cases][unittest documentation, test-cases section]]
