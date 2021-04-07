@@ -1,0 +1,49 @@
+Tests can be good documentation for requirements that stakeholders have put forth.
+
+* prequisite for following examples
+#+begin_src 
+from theatre import SeatFinder
+class SeatFinderTest(unittest.TestCase):
+#+end_src
+
+** use case
+#+begin_src python
+def test_prefer_near_front(self):
+  finder = seatFinder(available_seats={"A6", "B6", "C7"})
+  seats = finder.find_seats(1)
+  assert seats == {"A6"}
+#+end_src
+
+*** explanation
+In this test case we can see that we have a test case of an arranged set of seats, and will give us a seat that is nearest to the front.
+
+** use case
+#+begin_src python
+def test_find_adjacent_seats_when_more_than_one_requested(self):
+  finder = seatFinder(available_seats={"A6", "A8", "C6", "C7"})
+  seats = finder.find_seats(2)
+  assert seats == {"C6", "C7"}
+#+end_src
+
+*** explanation
+here we have seats for 2 people, they would want to sit next to each other above sitting at the front.
+
+** use case
+#+begin_src python
+def test_find_seperate_seats_when_adjacent_not_available(self):
+  finder = seatFinder(available_seats={"A6", "B6", "C7"})
+  seats = finder.find_seats(2)
+  assert seats == {"B6", "A6"}
+#+end_src
+
+*** exaplantion
+give people the option to take seperate seats if nothing adjacent is available.
+
+** use case
+#+begin_src python
+def test_find_seats_fails_when_not_enough_available(self): 
+  finder = seatFinder(available_seats={"A6", "B6", "C7"})
+  seats = finder.find_seats(5)
+  assert seats == {}
+#+end_src
+

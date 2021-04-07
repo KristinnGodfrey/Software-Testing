@@ -1,0 +1,77 @@
+* Unit testing helps you understand what to build
+code can be used as documentation from requirments made by stakeholders
+**** see implementation:
+[[./theatre/][theatre]]
+
+* Unit testing helps you document the units
+
+* Unit testing helps with design
+** Decompose into testable units
+Loose coupling & high cohesion more likely.
+** Design interface & implementation seperately
+By 'interface' we mean function name, parameter list, return type.
+
+*** example
+We have an example where we have an telemetry client that is not suitable for unit test.
+Cause it makes connections over a real network. We want to be able to replace it with a test double.
+
+**** see implementation:
+[[./telemetry/][telemetry]]
+
+**** from testing we might see how we can logicly divide code
+tests made with high cohersion might open eyes to extracting code divided functions.
+~diff -u initial_telemetry.py telemetry.py~
+* Unit testing helps detect regression
+
+** Example
+[[./prescription/][prescription]]
+
+** Description
+we can see that adding a feature ~diff -u initial_prescription.py prescription.py~ warns us of two defects in our tests. This conveys that in our code, the patient class is relying on the old feature's functionality, so we might need to rethink and implement our new features in a different way.
+
+* Limitations of unit testing
+- Hard to write unit tests if we have many dependencies.
+- Test scenarios may not occur in production.
+- Tests may not notice failures.
+- Unit tests do not find integration or non-functional problems.
+
+* Unit testing is part of your job
+- Whiteboard sketches
+- REPL
+- Tests first
+
+*** Units of code
+*** Atomated unit tests
+
+* Test-Last process
+- Test when design is stable.
+- Risk that the design that we settled on is not very testable and may need considerable rework before we test.
+- Risk of discovering bugs late.
+- Tests are rushed.
+
+* Test-First process
+- Design is testable
+- Risk of rework cause its hard to predict all cases in advance.
+  - You will end up iterating and improving our reworking our tests.
+
+* Test-Driven development
+- tests drive the process
+- unfamiliar way of working
+- takes discipline
+- refactoring takes skill
+
+* Automated build servers and continous integration
+** Tests support collaboration
+- pull changes from version control.
+- run the tests & check they pass before changing code.
+- run the tests again before sharing your changes.
+
+** Build automation server
+Relieves people of having to remember to run tests and runs it automated.
+- Detects changes from version control, fetches them.
+- Builds the code & runs the tests.
+- Communicates the result to developers.
+- If passing tests - deploys to manual testing environment.
+
+** Continuous integration
+- Frequent small commits, running the tests on each one, ensuring they pass.

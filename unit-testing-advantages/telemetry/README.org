@@ -1,0 +1,4 @@
+Add a constructor argument so that the test could pass in a different telemetry client that would be more suitable to test with
+
+**** see implementation:
+~diff -u initial_telemetry.py telemetry.py~
