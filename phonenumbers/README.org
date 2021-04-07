@@ -1,0 +1,66 @@
+* Phonebook
+
+** Project description
+Given a list of names and phone numbers
+Make a phonebook 
+Detetermine if it is consistent
+ - no number is a prefix of another
+   - Bob 91125426, Anna 97625992
+   - Emergency 911
+   - Bob and Emergency are inconsistent
+
+** Documentation
+[[https://docs.python.org/3/library/unittest.html#test-cases][unittest documentation, test-cases section]]
+
+** Running test cases
+~python3 -m unittest test_phonebook.py~
+
+** Refactoring repetetive code
+~phonebook = PhoneBook()~ will become:
+
+*** setUp
+works like init and works instances of global vars inside the method's scope.
+We replace it with the setup method by calling ~self~.
+
+*** tearDown
+for this case, phonebook is entirely in memory so there is nothing to release. In a general case, fx creating files, we might need to release those sources.
+
+*** Test fixture: order of execution
+~setUp()~ -> ~TestCaseMethod()~ -> ~TearDown~
+If defect is in ~setUp()~, then none of the latter operations will run.
+
+** skip unittest
+~@unittest.skip("WIP")~
+#+begin_src python
+def ...:
+    ...
+#+end_src
+
+** Don't make large unittest test cases
+#+begin_src python
+def test_empty_phonebook_is_consistent(self):
+    self.phonebook.add("Bob", "12345")
+    self.assertTrue(self.phonebook.is_consistent())
+    self.phonebook.add("Anna", "012345")
+    self.assertTrue(self.phonebook.is_consistent())
+    self.phonebook.add("Sue", "12345")  # identical to bob
+    self.assertFalse(self.phonebook.is_consistent())
+    self.phonebook.add("Meg", "123")  # prefix of bob
+    self.assertFalse(self.phonebook.is_consistent())
+#+end_src
+
+If we got an defect by the middle of our code, we would not run the rest of the test case.
+
+We want the test case names to be readable and concise.
+
+** Three parts of a test
+*** Arrange
+Set up the object to be tested, and collaborators.
+*** Act
+Exercise the unit under test.
+*** Assert
+Make claims about what happened.
+
+** Example of multiple assert steps
+This is unusual for a unit test.
+~test_phonebook_adds_names_and_numbers~ tests the add function, and we need to test that the name and number are added.
