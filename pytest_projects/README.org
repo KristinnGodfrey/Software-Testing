@@ -1,0 +1,46 @@
+* Pytest features
+** phonebook_pytest
+- no class needed
+- no imports needed
+- we get a more detailed analysis if we get an error. it tells us:
+  - the method we called
+  - and the argument that it gave
+- gives us a link with a window displaying ~diff~
+- relies on the built-in language constructs, e.g. ~assert~ instead of ~assertEqual~
+- ~with pytest.raises(KeyError):~
+-test fixtures:
+#+begin_src python
+@pytest.fixture
+def phonebook():
+    return PhoneBook()
+#+end_src
+- yield:
+#+begin_src python
+@pytest.fixture
+def phonebook():
+    phonebook = PhoneBook()
+    yield phonebook
+    phonebook.clear()
+#+end_src
+Runs after where you would normally put a return statement. In this case we yield to clear a text file upon stopping run.
+- built-in fixtures:
+we are utilizing ~tmpdir~ fixture that will create a temporary directory.
+- pytest has good documentation, e.g.: ~pytest --fixtures~
+
+* Organizing test code
+
+* markers
+** ini file
+specify markers
+
+** run excluded markers
+~python -m pytest "not slow"~
+
+** built in markers
+~python -m pytest --markers~
+we can see for example ~@pytest.mark.skipif(sys.version.info < (3,6), reason="requires python3.6 or higher")~ which allows us to skip a version
+
+*** example
+~@pytest.mark.skip("WIP")~
+skip cause its work in progress.
+
