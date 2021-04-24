@@ -1,0 +1,57 @@
+* Use cases for doctest
+- docstring maintenance
+keep it synchronized with the code
+- regression testing
+similar to unittest or pytest
+- tutorial documentation
+when you publish a python library
+
+** other use cases
+- dictionaries
+- floating point numbers
+- tracebacks
+
+* yatzy rules summary (requirement gathering)
+- roll a dice (and re-roll some twice)
+- choose an (unused) category to score the roll in
+- you score is the sum of the scores in each category
+
+** yatzy scoring examples
+*** dice_rolls = [1,2,2,3,3] equals:
+- "two pairs" (2+2+3+3=10)
+- "threes" (3+3) = 6
+- "small straight" = 0 (we didn't score this case but it could be a good move to count this)
+
+** test runners
+*** ~python3 -m doctest yatzy.py -v~
+passed in file with verbose tag, elsewise it doesn't show passed tests
+*** ~python3 -m pytest --doctest-modules -v~
+run all doctest in the current working directory
+
+** test runner inconsistencies
+- doctest's own runner doesn't discover all tests for you
+- pytest has +ELLIPSIS directive permanently on
+- Pycharm's doctest runner doesn't accept global directives.
+
+** the best test runner
+pytest test runner, it's more convenient to use in an continuous integration in a build pipeline, and i can use it interactively in Pycharm. It's the most widely used test runner.
+
+* handling output that changes
+- dates and times
+- object id's
+- random numbers
+
+When the tests include values that are likely to change in unpredictable ways, and where the actual value is not important to the test results, use the ELLIPSIS option to tell doctest to ignore portions of the verification value.
+
+* seed randomness (REPL example)
+#+begin_src python
+from yatzy_game import roll
+import random
+
+random.seed(1234)
+roll(5)
+# [1, 1, 1, 4, 5]
+roll(5)
+# [1, 1, 1, 4, 5] same output.
+#+end_src
+
