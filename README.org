@@ -5,4 +5,4 @@
 | cucumber                       | unit test (java)   | [[./java-cucumber/main/IntStack.java][1]]              | [[./java-cucumber/tests/IntStack.feature][1]], [[./java-cucumber/tests/IntStackStepdefs.java][2]]           |
 | [[./unittest/][unittest.TestCase projects]]     | unit test (python) | [[./unittest/phonenumbers/phonebook.py][1]], [[./unittest/theatre/theatre.py][2]], [[./unittest/telemetry/telemetry.py][3]], [[./unittest/prescription/prescription.py][4]]     | [[./unittest/phonenumbers/test_phonebook.py][1]], [[./unittest/theatre/test_theatre.py][2]], [[./unittest/telemetry/test_telemetry.py][3]], [[./unittest/prescription/test_prescription.py][4]]     |
 | [[./pytest_projects/][pytest]]                         | unit test (python) | [[./main/phonebook.py][1]]              | [[./tests/phonebook_pytest.py][1]]              |
-
+| [[./doctest_pytest_yatsy_project][doctest - pytest yatzy_project]] | unit test (python  |                |                |
