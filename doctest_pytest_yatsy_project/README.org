@@ -1,9 +1,9 @@
 * Use cases for doctest
-- docstring maintenance
+*** docstring maintenance
 keep it synchronized with the code
-- regression testing
+*** regression testing
 similar to unittest or pytest
-- tutorial documentation
+*** tutorial documentation
 when you publish a python library
 
 ** other use cases
