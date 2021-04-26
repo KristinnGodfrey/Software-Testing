@@ -1,9 +1,9 @@
 * Use cases for doctest
-- docstring maintenance
+*** docstring maintenance
 keep it synchronized with the code
-- regression testing
+*** regression testing
 similar to unittest or pytest
-- tutorial documentation
+*** tutorial documentation
 when you publish a python library
 
 ** other use cases
@@ -43,7 +43,7 @@ pytest test runner, it's more convenient to use in an continuous integration in 
 
 When the tests include values that are likely to change in unpredictable ways, and where the actual value is not important to the test results, use the ELLIPSIS option to tell doctest to ignore portions of the verification value.
 
-* seed randomness (REPL example)
+** seed randomness (REPL example)
 #+begin_src python
 from yatzy_game import roll
 import random
