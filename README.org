@@ -1,9 +1,772 @@
 | title (link to README)         | type                            | src/main files | src/test files |
 |--------------------------------+---------------------------------+----------------+----------------|
-| [[./equivalence-class-partitioning-and-boundary-value-analysis/][equivalence class partitioning]] | manual                          |                |                |
+| [[./equivalence-class-partitioning-and-boundary-value-analysis/][equivalence class partitioning]] | black-box testing (manual)      |                |                |
 | mockito and pit                | junit (java)                    | [[./java-junit-mockito-and-pit/main/Money.java][1]], [[./java-junit-mockito-and-pit/main/MoneyStack.java][2]], [[./java-junit-mockito-and-pit/main/MoneyStackMain.java][3]]        | [[./java-junit-mockito-and-pit/test/MoneyStackTest.java][1]], [[./java-junit-mockito-and-pit/test/MoneyStackWithMockTest.java][2]], [[./java-junit-mockito-and-pit/test/MoneyTest.java][3]]        |
 | cucumber                       | gherkin (bdd for java)          | [[./java-cucumber/main/IntStack.java][1]]              | [[./java-cucumber/tests/IntStack.feature][1]], [[./java-cucumber/tests/IntStackStepdefs.java][2]]           |
 | [[./unittest/][unittest.TestCase testing]]      | unittest (java)                 | [[./unittest/phonenumbers/phonebook.py][1]], [[./unittest/theatre/theatre.py][2]], [[./unittest/telemetry/telemetry.py][3]], [[./unittest/prescription/prescription.py][4]]     | [[./unittest/phonenumbers/test_phonebook.py][1]], [[./unittest/theatre/test_theatre.py][2]], [[./unittest/telemetry/test_telemetry.py][3]], [[./unittest/prescription/test_prescription.py][4]]     |
 | [[./pytest_projects/phonebook/][phonebook testing]]              | pytest (python)                 | [[./main/phonebook.py][1]]              | [[./tests/phonebook_pytest.py][1]]              |
 | [[./doctest_pytest_yatsy_project][yatzy_project]]                  | doctest, pytest (python)        |                |                |
 | karate API testing             | karate (bdd for a java project) | [[https://github.com/KristinnGodfrey/HikersIceland/tree/main/src/main/java/is/hi/g/hikersicelands/hikersicelands/Controllers/RESTControllers][1]]              | [[https://github.com/KristinnGodfrey/HikersIceland/tree/main/src/test/java/is/hi/g/hikersicelands/hikersicelands/APItests][1]]              |
+
+
+** C1 Introduction Foundations
+*** Ch. 1 Complexity of testing (1) (1-9)
+Testing all possibilities is impossible, so many different paths
+*** Ch. 1 Complexity of testing (2) (1-10)
+Testing all possibilities is impossible, so many different paths
+*** Ch. 1 A first informal exercise (1-11 to 1-23)
+**** triangle example:
+how many tests are required to reasonably test all cases?
+***** positive test cases
+- scalene
+- equilateral
+- isosceles
+- two concrete test cases of tc3. (different concrete values)
+***** negative test cases
+we could think about the requirements, edge cases, boundary values, invalid perumatations of positive test cases, no input at all, negative input, thinking about input type (length), thinking about multiple value inputs
+*** Ch. 1 Failure, Defect, Error (1-30)
+Errors (1) made during programming lead to defects (2) in a programme, being exposed by execution failure (3).
+*** Ch. 1 Propagation of defects/errors (1-32)
+Fixing defects early on saves time in the long run.
+*** Ch. 1 Testing and Debugging (1-34)
+**** weak orcale:
+automated tests like watching out for crashes.
+violation of a programming language rules. 
+*** Ch. 1 Classification of Quality Management Activitites (1-41)
+**** QA has two meanings
+- refers to all quality related activities.
+- refers only to documenting that quality management activites are performed, i.e. assuring that QM activities have been performed.
+*** Ch. 1 Software Analysis (1-44)
+- dynamic: Testing is only a partial factor of software analysis. As testing is a dynamic analytical activy - so is profiling: e.g. timing functions in code, counting how often methods are called, count unreleased memeory in programinng laguages without garbage collectors.
+
+- static: 
+  - computer based: computer based means something like spell checker, metrics, and warning.
+  - manual: where we as humans are f.x. reviewing documents, requirements etc.
+*** Ch. 1 Testing Is it worth the efforts? (1-48)
+**** Seven general principles of testing
+***** P1: Testing shows presence of defects, not their absence.
+Testing cannot prove that a program is error free.
+***** P2: Exhaustive testing is not possible.
+Impossible to test all combinations of input values.
+***** P3:Testing activities should start as early as possible.
+Finding defects early reduces costs.
+***** P4: Defects tend to cluster together. 
+Often defects are found in the same part of the test object. Test plan needs to be flexible enough to allow more thorough testing of these clusters found during testing.
+***** P5:  pesticide paradox. 
+Executing the same tests over and over again does not reveal new errors. (A test is effective, if it reveals a (new) error. However, simply repeating tests does not increase effectiveness.) Only new or modified tests increase effectiveness. (Similar to pesticides or antibiotics that get ineffective when applied multiple times and thus need to be replaced.)
+***** P6: Testing is context-dependent. 
+Each system needs to be tested in a different depending on individual risks of each application.
+***** P7: The fallacy of assuming that no failures means a useful system.
+No failures does not guarantee that a system meets user expectations. Involve users early into software development to prevent misunderstandings.
+*** Ch. 1 Waterfall model (1-54/55)
+[[./img/waterfall.png][Boehm's waterfall model]]
+What we mostly take from this model is that testing is only done near the end.
+*** Ch. 1 V model (1-56/57)
+[[img/vModel.png][boehms V-model]]
+We see that f.x the acceptance test should correlate to the requirements definition, etc.
+*** Ch. 1 Fundamental test process (1-59)
+[[img/testProcess.png][Test process]]
+In the slides is detailed information on each step
+*** Ch. 1 Test Analysis and Design (6) (1-68)
+*** Ch. 1 Evaluation of Exit Criteria (1-73 to 1-77)
+*** Ch. 1 Test Process in ISO/IEC/IEEE standard 29119-2:2103 (1-82)
+
+** C2 Testing in the Software Life Cycle
+- Explain the relationships between software development activities and test activities in the software development lifecycle.
+- Identify reasons why software development lifecycle models must be adapted to the context of project and product characteristics.
+- Compare the different test levels from the perspective of objectives, test basis, test objects, typical defects and failures, and approaches and responsibilities.
+- Comparefunctional, non-functional, and white-boxtesting Recognize that functional, non-functional, and white-box tests occur at any test level
+- Compare the purposes of confirmation testing and regression testing
+- Summarizetriggersformaintenancetesting
+- Describe the role of impact analysis in maintenance testing
+
+*** Ch. 2 Recap / Discussion
+*** Ch. 2 W model (2-11)
+W model means:
+- that we can prepare the given test when the definition is being made. 
+- that we give space for debugging in our test stages
+  - and we regress to programming when we find defects.
+*** Ch. 2 Component test (unit tests)
+- Depending on the programming language of the component, the tested components (and thus the corresponding tests) are called differently:
+- Unit (Unit test), Module (Module test), Class (Class test).
+- The term "compnent test" and "unit test" abstracts from the used programming language.
+- Each software component is tested individually and isolated from all other components.
+- Isolation prevents external influences (e.g. those from other components).
+- If component testing detects a problem, it is definitely originating from the component under test.
+- It is easier to test error conditions (negative test cases) at component level than at higher levels.
+  - Due to better controllability of a component.
+- The component under test may even be assembled from smaller
+components:
+  - However, aspects internal to that assembly of components are tested, not the interaction with further neighbour components.
+
+*** Ch. 2 Test environment (2-17)
+Test environment consists of
+- Test driver: (f.x. JUnit)
+  - Calls the component under test (stimulation).
+  - Receives reaction of component under test (observation).
+Test stubs (Test Doubles(Dummies, Mock-up)):
+- Placeholders serving as replacement for dependencies of the component under test.
+- Provide simplified functionality of the imported services.
+- Component tests are typically written by the developers themselves.
+  - (As discussed in Chapter 1, this has advantages and disadvantages.)
+
+**** Test objectives
+Assuring the functional aspects: 
+- Functionality (positive tests),
+- Robustness (negative tests).
+Assure non-functional properties, e.g:
+- Efficiency, E.g. how fast, memory consumption. 􏰀 
+- Maintainability. By looking at the source code.
+
+**** Test strategy
+- Component testing is the domain of white-box testing
+- In reality, component testing is often a pure black-box test, though!
+  - Results in lower coverage of source code. (More defects may hide.)
+
+*** Ch. 2 Integration Test
+- Groups of components are tested systematically to identify problems in the interaction of components.
+- Tests correct collaboration of components, i.e. faults in interfaces and interaction of components.
+[[img/integration.png][integration testing]]
+
+**** Ch. 2 Integration Test Top Down (2-38 to 2-39)
+- We can use stubs for sub-modules that arent ready.
+  - which assures us that the unfinished sub-module is giving the right output.
+  - In general stubs are harder to create than test drivers.
+
+**** Ch. 2 Integration Test Bottom Up (2-40 to 2-41)
+- We can use drivers for parent modules that arent ready.
+  - which assures us that the unfinished parent module is giving the right output.
+  - In general stubs are harder to create than test drivers.
+
+- We can do the same for parent-module and create a driver to simulate it.
+**** Ch. 2 Integration Test Ad-hoc (2-42 to 2-43)
+- steer away from ad-hoc
+- first-come first-served
+  - test drivers and stubs needed.
+  - might create unnessesarily many doubles.
+**** Ch. 2 Integration Test Big Bang (2-42 to 2-43)
+- steer away from big-bang
+- Then we would have to wait for all sub-modules to be ready. 
+  - That is wasted time for develpopers. 
+- Difficult to trace root of a defect.
+- High likelyhood of defects.
+
+*** Ch. 2 System Test
+System test looks at the product from the perspective of a user, i.e. with respect to the functional specification (i.e. with a focus on validation).
+
+- the same hardware (incl. internal and external devices, network) and further software (OS, device drivers, libraries, services) that is used in the later operational environment shall be installed on the test platform.
+
+*** Ch. 2 Acceptance Test
+Test of the final product in which the customer judges whether (s)he accepts the delivered
+software before putting the software into operational use.
+
+- Its a good idea to put the requirements into BDD environment to get the acceptance test skeleton at the requirements stage (W-model).
+
+*** Ch. 2 Testing new Product Versions Incremental/Iterative Development (2-72)
+- Understand feature test, regression test, and confirmation test
+Causes for software maintenance that trigger maintenance testing: 􏰀
+- Modification:
+  - Defects are observed.
+    - Sometimes, crashes happen rarely or only after long uptime are reported.
+  - Customer expresses new wishes.
+􏰀  - E.g. Functions for seldom arising special (and thus forgotten) cases are required.
+- Migration: System needs to run in a new environment.
+- Retirement: data needs to be archived or converted.
+- Be sure that no side effects were introduced, remainder of system must also be tested
+
+*** Ch. 2 Generic Types of testing
+- all in slides, maybe add exploratory testing
+
+** C3 Static Testing
+*** Ch. 3, Foundations of Static Testing
+[[img/SQM.png][SQM tree structure]]
+[[img/staticTesting.png][static testing]]
+
+- Simple static analyses can be well (and better) done by machines, e.g. calculating metrics.
+- Static analyses involving understanding can better done by people, performing reviews.
+
+*** Ch. 3 Roles and Responsibilities (1) (3-20)
+- Manager, Does not participate in the review!
+- Review Team, Responsible for review decisions/recommendation.
+  - Reviewer (2 to max. 5 technical experts per review):
+  - Moderator/"Facilitator" (review leader might take this role)
+  - Scribe/Recorder (Documents findings, likely writes the protocol)
+  - Author (one main responsible author in case of multiple authors)
+
+*** Ch. 3 General Review Process (3-24)
+- Duration of review meeting: max. 2 hours.
+  - Third hour:
+    - Relaxed discussion (max.: 1 hour) with author and exchange of experience immediately following the review meeting.
+    - Preserve good ideas and solutions, spread knowledge related to the reviewed document.
+􏰀  - Feedback concerning review itself:
+      - What was good?
+      - What was bad?
+      - How to improve future reviews?
+
+*** Ch. 3 Review Techniques
+- Ad hoc (avoid!):
+ - No guidance (e.g. checklists), no different roles (leading to many duplicate findings).
+- Checklist-based:
+  - Checklists are used. Still, encouraged to find also defects not covered by checklist.
+  - Different roles/perspectives (below) with different checklists.
+- Role-based:
+  - Each reviewer evaluates from a different stakeholder role, e.g.: Tester vs. Administrator vs. Developer point vs. Maintainer of view on review object: is it easy to test, easy to operate, easy to develop, easy to maintain?
+- Perspective-based: Form of role-based review, but more strict:
+  - Checklists are used.
+  - Each role tries to create a prototypic draft follow-up product: e.g. tester creates test cases from reviewed requirements, developers a functional specification.
+- Scenarios and dry runs:
+  - Walk through revie􏰌 object using scenarios (e.g. user stories) to perform "dry run".
+  - Still, encouraged to find also defects not covered by scenarios.
+**** Review tools
+- Standalone tool Crucible for source code review
+- Gitlab to add comments to lines of git commit of a merge request.
+
+*** Ch. 3 Reviewing Takes Time / Size of Code to Review (3-52)
+
+*** Ch. 3 Review Costs and Cost Savings (1) (3-53)
+- Experience: More than 60% of the defects that are found during productive use, were introduced before coding. Reviews can be used to check documents that cannot be checked using static analysis tools or using dynamic testing.
+- Experience: Systematic review/inspection may find 50-70% of the
+defects in a document.
+- Effort for review can be reduced if document has been checked before by a static analysis tool.
+  - Perform static analysis before review! It can be automated.
+  - E.g. does a component call outdated methods of another component (e.g. according to Javadoc @deprecated tag or Java @Deprecated annotation)?
+*** Ch. 3 Improvement of inspection effectiveness over time (at Fujitsu) (3-55)
+*** Ch. 3, Section 3.3 Computer-based static analysis
+- Objective: Just like reviews, reveal and locate defects or parts that are defect-prone in a document.
+  - Examples: spell checker, compiler for source code.
+- Static Analysis tools
+  - [[./img/compiler.png][Compiler, Checkstyle tool]]
+  - [[./img/spotbugs.png][SpotBugs (formerly FindBugs) tool]]
+- Static analysis of programs often suffers from the decidability problem
+  - In general, it is not possible to predict the result of some algorithmic computation (false positives and false negatives)
+
+*** Ch. 3 Classification Static Analysis (3-58)
+*** Ch. 3 Control Flow Graph (CFG): Examples for common control flow (3-75)
+Control flow is determined by control instructions:
+- Unconditional branching (GOTO)
+- Conditional branching (IF-THEN-ELSE, SWITCH-CASE)
+- Loops (FOR, WHILE, DO-WHILE, REAPEAT-UNTIL)
+- Calling subroutines (Function-, Procedure-, Method call)
+- Non-local exits (e.g. exceptions)
+*** Ch. 3 Example: Control Flow Graph (3-76)
+see slide 75-76, and assignment 5.
+
+- For control flow analysis, it is OK to summarize multiple lines into one node 
+  - When we later do data flow analysis, the order between lines matters and one line needs to be mapped to one node!
+- A graphical representation of a CFG allows a human person to understand easier the control flow and to detect anomalies (CFG preferably created not manually, but by a tool)
+
+**** Control flow anomaly
+- predecessor-successor table
+- usage states:
+  - undefined (u): A variable has no defined value: e.g. if a variable is declared but not yet initialised, or if the associated memory has been de-allocated (e.g. because the corresponding scope of that variable has been left).
+  - defined (u):  A value has been assigned to the variable.
+  - referenced (r): The value of the variable has been read or used.
+- data flow anomalies
+  - ur-anomaly: An undefined value (u) of a variable is read (r) on a program path.
+  - du-anomaly: The variable is assigned a value (d) that becomes invalid/undefined (u)
+without having been used in the meantime.
+  - dd-anomaly: The variable receives a value (d) and the value that it received before (d) has
+never been used, but was rather overwritten.
+
+*** Ch. 3 Control Flow Graph Analysis: Graph based (3-77)
+*** Ch. 3 Example: Predecessor-successor table (3-79)
+*** Ch. 3 Data Flow Analysis (3-80)
+*** Ch. 3 Example Data Flow Anomalies (3-83 to 3-86)
+slides 83-85
+*** Ch. 3 Complexity: Examples (3-95)
+*** Ch. 3 Complexity metric: Maximum Depth of Nesting (3-99)
+*** Ch. 3 McCabe's Cyclomatic Complexity (3-96 to 3-98)
+- Cyclomatic number gives an indication on number of test cases required for covering all branches of control flow:
+  - v(G) is an upper bound for the number of test cases that are necessary to achieve a branch coverage and a lower bound for the number of paths (see later chapter on white-box testing).
+
+~v(G) := e - n + p~
+e: number of edges,
+n: number of nodes (incl. entry & exit nodes)
+p: number of entry points and exit points
+
+- Multiple exit points can be turned into a single exit point by adding an additional end node and adding edges from all exit points to that end node: p=2, i.e. ~v(G):=e-n+2~
+- According to McCabe, v(G)>10 is not tolerable. Program must be restructured to decrease v(G).
+- multiple drawbacks (edge cases):
+  - switch-case
+  - sequence of if-statements wages the same as nested if-statments
+  - and more..
+- its still good to use it as a measurement tool to get a rough idea to know the upper and lower bounds of tc's.
+*** Ch. 3 The GQM Approach (3) Example (3-102)
+If you find you are finding multiple defects that you have to regress to in code, it might be smart to look into a metric approach with following approach:
+- Which goal shall be reached?
+- Which questions need to be answered to know whether the goal was reached?
+- Which metrics are able to answer the questions?
+
+- steps defined in slide 101
+- img in slide 102
+
+** C4 Dynamic Testing
+- Highlight differences between dynamic testing and static testing.
+- Explain unstructured vs. systematic testing.
+- Review of terms related to the test environment.
+- Explain the characteristics, commonalities, and differences
+  - between black-box test techniques, white-box test techniques, and experience-based test techniques by giving a high-level overview on them.
+- Explain error guessing.
+- Explain exploratory testing.
+- Explain checklist-based testing.
+
+[[./img/sqDT.png][Software Quality Management tree]]
+[[./img/AADT.png][Analytical Activities tree]]
+
+*** Ch.4 Static Testing vs. Dynamic Testing
+- Static tests check the static descriptions themselves without executing the test object.
+- Dynamic tests check the dynamic behaviour resulting from the execution of the static descriptions (the test object).
+  - Test object is executed on a computer.
+     - Test object must be executable!
+􏰀- Input data is provided,
+  - If needed: stimulate test object.
+    - (=callmethod,pressbutton,etc.)
+  - Output data is observed.
+
+- Test object: Some executable piece of code.
+  - May be a complete system or single component that needs additional stubs to be executed. 􏰀 
+- Test objective: Reveal failures.
+  - In fact, two different aims of testing can be distinguished:
+    - Failure-oriented: Reveal failures.
+      - Test where it is likely that errors have been made.
+    - Conformance-oriented: Check that test object conforms to its specification: Conformance test or Acceptance test.
+      - Test of the required functionality.
+    - In practise, a blend of both is used:
+- Test strategy: Different test case design techniques available for creating test cases (white-box, black-box).
+
+*** Ch. 4 Test Case Design Techniques: Black-Box Testing / White-Box Testing (4-13 to 4-14)
+**** Black-box testing 
+- Test cases derived from specification or requirements.
+- Internal program structure (source code) needs not to be known (=software is like a black box).
+- Test drivers outside of test object via interfaces.
+- Black-box test design techniques are typically used at higher test-levels (e.g. acceptance test, system test).
+
+**** White-box testing
+- Test cases (input values) derived from internal program structure.
+  - However, expected output values still derived from specification.
+- Source code needs to be known.
+- Test drivers may even access test objects internals:
+  - to trace control dlow and read internal variables.
+  - change internal state to provoke error conditions.
+- White-box test design techniques are (if at all) typically used at lower test- levels (e.g. component test).
+
+
+**** differences between Black-box testing and White-box testing
+
+*** Ch. 4 Test Case Design Techniques: Taxonomy (4-15)
+More test designs in this section. look at slides from 15-21
+
+** C5: White-Box testing
+- Explain the value of control flow graph based coverage. 􏰀 
+- Explain statement coverage, branch coverage coverage, path coverage, loop boundary coverages.
+- Explain condition-based coverage: Branch Condition Testing / Basic Condition Coverage, Branch Condition Combination Testing / Multiple Condition Coverage, Minimal Multiple Condition Coverage, Decision coverage.
+- Explain defs/uses data flow based coverage.
+
+[[./tcDesignTechniques.png][Test case design techniques]]
+*** Ch. 5 Recap
+*** Ch. 5 Statement Coverage Example (5-10)
+Cover all nodes
+*** Ch. 5 Branch Coverage Example (5-12)
+Cover all branches
+*** Ch. 5 Path Coverage Example (5-14)
+Most often not used, except for extremely simple programs.
+*** Ch. 5 Boundary-Interior Coverage/Loop Boundary Adequacy Example (5-17)
+Entering loops multiple times, test that 0,1,2 iterations are correct.
+- Exterior path
+- Boundary path
+- Interior path
+
+*** Ch. 5 Used example (C++): Count Vowels and Total Characters (5-21)
+- inputs evaluates once to true and once to false.
+
+TODO gera svona dæmi á blað
+chr á milli A og > Z
+fá true í hverju instance a if setningunni
+gera síðan negative test caeses að sýna vitlaus input í skálínu.
+allt fyrir neðan er terminated og þarf ekki að skrifa ef villa er í fyrra conditioninu fyrir ofan.
+*** Ch. 5 Branch Condition Testing / Basic Condition Coverage Example (5-23)
+*** Ch. 5 Branch Condition Combination Testing / Multiple Condition Coverage: Example (5-25)
+*** Ch. 5 Minimal Multiple Condition Coverage Example (5-27)
+everything evaluates once to true and once to false, including maxint
+*** Ch. 5 Defs/Uses Annotation Example (5-31)
+- start: e.g: ~Start: def(NoOfVowels), def(TotalNo)~
+- def: assignment of a value in a variable
+- p-use: usage of a variable within a condition. 
+- c-use: any other usage of a variable. 
+- note: ordering matters. reassignment of a variable then c-use comes first, then def.
+- note: standard input ~cin~ in c++ is def
+
+
+*** Ch. 5 All Defs Example (5-35)
+all defs: for all defs in coverage, make sure that we have at least one p-use or c-use. 
+
+*** Ch. 5 All c-use and all p-use
+think i can skip this section for now.
+
+** C6 Black-Box testing
+- Apply equivalence partitioning to derive test cases from given requirements.
+- Apply boundary value analysis to derive test cases from given requirements.
+- Apply cause-effect graphing and decision table testing to derive test cases from given requirements.
+- Explain how to derive test cases from a use case.
+- Explain random testing/fuzz testing and smoke testing.
+
+**** Test case selection criteria used in black-box testing
+- Specification coverage:
+  - Each functionality listed in the specification is executed at least once.
+    - (In practise, you need more than one test case per functionality, e.g. to achieve some input coverage or output coverage.)
+  - Minimal criterion that you should aim for when doing black-box test.
+- Input coverage:
+  - Each possible input values is used.
+  - Such exhaustive testing is typically not possible due to high number of possibilities/combinations.
+- Output coverage:
+  - Each possible output value is created by test cases.
+  - Depends on domain of output value whether this is feasible or not.
+
+**** Main Black-box Test Design Techniques (According to G. Myers)
+- Equivalence class partitioning(EC = equivalenceclass):
+  - To obtain a representative set of input data, the domain of possible (including also incorrect) input values is divided into equivalence classes. (Also applicable to output values.)
+  - From each equivalence classes, (at least) one representative value is chosen.
+- Boundary value analysis(BVA, BV = boundary value):
+  - Typically, failures can be observed at the boundary of domains. Due to off by one errors, e.g. usage of < instead of <=.
+  - Test cases are designed using such boundary values
+- Cause-effect graphing(includes decision table testing):
+  - Dependencies between inputs and their effects on output are considered.
+  - Design test cases so that each cause and each effect is at least once present and once absent.
+
+*** Ch. 6 Equivalence Class Partitioning: Example (6-24 to 6-26)
+assignment 7
+*** Ch. 6 Basic Idea of Boundary Value Analysis (4) (6-34)
+assignment 7
+*** Ch. 6 Boundary Value Analysis: Example (6-37 to 6-38)
+assignment 7 
+- we can't test every possible input.
+  - we look for the boundary values, i.e. upper bound, lower bound and "one-off bounds" (still may be positive).
+
+
+*** Ch. 6 Cause-Effect Graphing: Notation and Graph Example (6-45 to 6-48)
+assignment 8
+- documented table for description
+  - read description and input cause and effects.
+  - note: in case of negation of we don't have to write it in the table, rather negate it in the CE-graph
+- CE-Graph
+  - edges go from cause to effects.
+  - we can use AND or OR notation for multiple 
+- Decision table
+  - from CE-Graph we can look at what makes the first effect true?
+    - that is f.x. C1^C2^C3 and C4 does not matter.
+    - do this for every effect and we'll have a filled table.
+  
+*** Ch. 6 Cause-Effect Graphing: Decision table/Example (3) (6-50 to 6-51)
+*** Ch. 6 Decision Table Technique (3): Example (6-55)
+*** Ch. 6 Use Case-based Testing (2) (6-57)
+- It is reasonable to create test cases based on use cases.
+- Approach:
+  - One test case for the mainstream scenario.
+  - One test case for each extension scenario.
+[[./img/ATMUC.png][example use cases]]
+
+**** BDD
+BDD is very good to test user stories. 
+- UC use the narrative ("As an.., "I want" .. "So that")
+- BDD uses ("Given", "When", "Then") which transposes well to user stories.
+
+*** Ch. 6 Further Test Techniques
+**** Smoke test
+- E.g. Smoke test of electronic control units for cars:
+  - Short circuit some outputs and to see whether the device shuts down orderly or whether smoke rises.
+- Test objective: Check whether the test object is mature enough to proceed with further more comprehensive testing.]
+
+**** Random test
+Generate input values of test cases randomly.
+
+** C7 Testing Object-Oriented Software
+- Understand differences of testing object-oriented software and non- object-oriented software.
+- Describe testing along inheritance hierarchies: Polymorphy affecting integration and regression testing (Yo-yo effect).
+- Understand modality of classes and the representation of object- oriented classes as state transition diagram.
+- Apply state transition testing / state-based testing to derive test cases from state transition diagrams (using transition trees and round-trip paths and a response matrix).
+
+*** Ch. 7 Recap
+*** Ch. 7 Inheritance and Polymorphy (7-11 to 7-13)
+- We might have to retest the methods from superclass if method in sub-class does changes. Not vise-versa cause inheritance makes a copy when initalizing sub-class.
+  - Java ~final~ methods prevent this behaviour
+  - C++ ~virtual~ methods prevent this behaviour.
+*** Ch. 7 Yo-yo Effect (7-14)
+In this example we are using initalizing with ~virtual~ from superclass. Virtual (=dynamic binding): Method may be redefined in a subclass and when the superclass methods are used in the context of its subclass, they will call re-defined method from subclass (instead of superclass methods)
+
+Our only non-~virutal~ init is at the bottom so we start there. The yoyo comes in place when we are searching for the getBitMap method from the superclass hieararchy above until we find it. And then we yoyo back down.
+
+*** Ch. 7 Yo-yo Effect and Changes (7-15)
+We might have multiple initializes of a method. We can add a ~virtual~ method that forces superclass to call an specific instance when it calls init.
+*** Ch. 7 Types of Classes: Class Modality
+- Non-modal class: no constraints
+- Uni-modal class: e.g. traffic lights: red->yellow->green 
+- Quasi-modal class: order does not matter – only state matters. e.g. pop() on empty stack does not work
+Modal class: Both, current state and earlier sequence of method calls constrain allowed method
+calls. e.g. Vending Machine, state and earlier sequence might matter.
+*** Ch. 7 Excursion: UML State Diagram Example (7-21)
+slide 21
+*** Ch. 7 FREE Model (2) Alpha and Omega States (7-25)
+assignment 9: FREE Model
+**** description
+Perform a state-based test of the Java class below implementing a simple vending machine.The method bodies are not shown – instead, their specification is as follows:The vending machine has a stock of bottles. If at least one bottle is in stock, one coin can beinserted, and the machine waits for a request of a bottle: as a result of a request, the bottle isdispensed (thus decrementing the stock) and the coin is consumed. The vending machine canbe constructed with no bottles in stock or a parameter can be used to specify the initial stock.In addition, there is a refill method to add a number of bottles to the stock. Note that themachine has a maximum capacity of bottles. Hence, the parameterised constructor and refillmethods shall only be called as long as this does not exceed the capacity. Also all parametersvalues shall always be>0.  Violation of these constraints will result in a correspondingexception. Furthermore, assume that if an event occurs in an inappropriate state, it is ignoredand rejected by a corresponding exception (see method signatures for exception types).
+**** steps
+The method bodies are not shown – instead, their specification is as follows:
+***** alpha
+starting state
+***** empty and not empty
+- The vending machine has a stock of bottles
+- the vending machine canbe constructed with no bottles in stock or a parameter can be used to specify the initial stock.
+***** insertCoin
+If at least one bottle is in stock, one coin can be inserted, and the machine waits for a request of a bottle: as a result of a request, the bottle is dispensed (thus decrementing the stock) and the coin is consumed. We can go to empty or not empty from this state.
+
+*** Ch. 7 FREE Model (3) Flattening a class (7-26)
+*** Ch. 7 FREE Model (4/5) (7-27/28)
+*** Ch. 7 Fault Model Assumed by N+ Strategy (7-29)
+*** Ch. 7 Excursion: Theory (& Practice) of State-based Testing (1-3) (7-30 to 7-32)
+*** Ch. 7 N+ Strategy (7-33)
+assignment 9: Transition tree, logical and concrete test cases with BV, 
+Systematic steps:
+- Create FREE model of class under test. 􏰲
+- Determine roundtrip paths to obtain positive test cases.
+- Determine sneak paths to obtain negative test cases. (The ~+~ in N+.) 
+- Turn logical test cases into concrete test cases.
+
+**** steps: 
+- transition tree:
+  - make a branch with every possible 
+    - we would want to repeat once, cause creating more child branches would be unnessesary work
+- response matrix:
+  - purpose is to "not fulfill" the states in the tc table above.
+
+
+*** Ch. 7 Transition Tree Account Example (7-35)
+*** Ch. 7 Response Matrix Account Example (7-43)
+*** Ch. 7 Alternative Approach: Merging Response Matrix into Transition Tree (7-44 to 7-45)
+
+** C8 Automating Unit Test Execution
+*** Ch. 8 Install Eclipse Java IDE (if you have no Java IDE installed)
+*** Ch. 8 JUnit 4: Import source code into Eclipse example (8-10)
+*** Ch. 8 Junit 4 Short Demo (8-10)
+*** Ch. 8 Junit 4: Fixture, Test Suites, Testing Exceptions, Eclipse Demo (8-12 to 8-14)
+*** Ch. 8 JUnit Version 4: assertThat (8-15 to 8-16)
+*** Ch. 8 JUnit 4 vs. Junit 5 (8-19 to 8-21)
+*** Ch. 8 Testing with Mock Objects (8-26 to 8-29)
+*** Ch. 8 Adding JAR libs to Eclipse (but you will get anyway read-made Eclipse projects)
+*** Ch. 8 Mockito demo for slides 8-33 to 8-37
+*** Ch. 8 Mockito Example: Using earlier TrafficLight as Class Under Test (8-38)
+*** Ch. 8 Test-Driven Development (TDD) with Eclipse (8-43)
+*** Ch. 8 Tools for Measuring Code Coverage EclEmma demo (8-45 to 8-46)
+*** Ch. 8 Install Pitclipse (8-50)
+*** Ch. 8 PIT Mutation Testing tool (8-50)
+*** Ch. 8 Cucumber demo (8-57 to 8-59)
+
+** C9 Test Tools
+- Classify test tools according to their purpose and the test activities they support.
+- Identify benefits and risks of test automation.
+- Remember special considerations for test execution and test management tools.
+- Identify the main principles for selecting a test tool.
+- Recall the objectives for using pilot projects to introduce test tools.
+- Identify the success factors for evaluation, implementation, deployment, and on-going support of test tools in an organization.
+- Introduce some test tools (in addition to JUnit, Mockito, Cucumber from Chapter 8).
+
+*** Ch. 9 (Test) Tools Types
+- Monitoring tools (e.g. network traffic monitors),
+  - Note: monitoring is typically intrusive, i.e. may influence test results, e.g. timing may change due to monitoring code ("probe effect")
+- Generic tools (in particular spreadsheets because test data or steps of test cases are typically written down in tables).
+  - Microsoft Excel
+**** Tools for test management and control 
+- Project- and test management (application lifecycle management
+(ALM))
+- Identifying and managing test cases:
+- Traceability:
+  - What part of the SW implements which requirement?
+  - Is every requirement covered by at least one test case?
+- Generating test reports and test documentation
+- Integration of various test tools
+- Tools for requirements management 
+- Tools for defect management / bug & issue tracking
+- Tools for configuration management:
+- Tools for continuous integration:
+- Tools for static testing
+
+**** Tools for Test Design & Implementation 
+- Test specification tools
+  - Textual or graphical editors and integrated development environments.
+- Mode-based Testing (MBT) and test data generation tools
+  - Database-based test data generators
+    - Generate test (input) data based on entries in databases
+  - Code-based test data generators 
+    - White-box testing
+  - Interface-based test data generators
+    - Values for expected results cannot be generated, hence approach is best suited for generating negative tests
+  - Specification-based test case generators/Model-based testing (MBT)
+    - Generate test cases based on a formal specification/model, e.g. from a UML diagram
+  - Behaviour-Driven Development (BDD) / Acceptance Test-Driven Development (ATDD) test tools
+
+**** Tools for text exectuion and logging
+many basic like JUnit, special ones the i find is:
+- How to test systems that have a graphical user interface (GUI)?
+  - Capture/replay approach (selenium)
+
+**** Tools for non-functional testing
+- Load generators for creating synthetic load (e.g. server requests or network traffic) required for load tests and performance tests.
+- Monitors measure, e.g., resulting response times.
+  - (May also be applicable for stress tests and volume tests.)
+- Security / Penetration test tools for performing security tests.
+  - Check for known vulnerabilities, use Fuzzers (􏰅Ch. 6) for random input.
+
+**** Tools for mobile app UI Testing
+- Similar approach as with Selenium
+
+**** Tools for Explorative Testing
+- observatron: screen recording and on screen annotation logging what failed.
+- bugmagnet: bogus input, e.g. long names, sql injections
+
+**** Reasons for Automating Test Execution
+**** Automating Test Execution: Limits
+- if test object often changes significantly (e.g. interface, functionality). Costs of updating automated tests too high.
+- If test requires physical interaction (e.g. pressing a physical button).
+􏰀 A mechanical robot might help. However, increases costs.
+- other obvious reasons
+
+**** Tool selection
+- Assess maturity of own organization (strengths and weaknesses):
+  - Identify opportunities for an improved test process when supported by tool.
+- Understanding technologies used by the test object(s), in order to select a tool that fits.
+- Tool must fit the build / continuous integration tools and test management tools already in use.
+- Evaluate the tool vendor or open-source project.
+- Training & support, Free trial period, etc.
+- Pros and cons of licensing models.
+- Who can coach the use of the tool? What are the training needs?
+- Estimate cost-benefit ratio based on a concrete business case.
+- Evaluate the tool against clear requirements and objective criteria.
+
+**** Tool Introduction
+- Introducing a selected test tool should start with a pilot project:
+  - Learn more details about the tool,
+􏰀- Evaluate how the tool fits existing processes and practices,
+􏰀- Decide on standard ways of using, managing, storing and maintaining the tool and the test assets (e.g., deciding on naming conventions for files and tests, creating re-usable test case libraries, using version control),
+  - Estimation whether the benefits will be achieved at reasonable costs.
+    - Identify metrics used for this estimation.
+- Success factors for introduction of a tool within an organisation:
+  - Introduce tool to the organization incrementally/stepwise,
+  - Integrate tool into existing processes/adapt processes,
+  - Provide training and usage guidelines for tool users,
+  - Gather lessons learned (howtos, FAQs) and make them available to all,
+  - Evaluate cost benefits based on tool-related metrics that are gathered.
+
+
+*** Ch. 9 Selenium IDE demo (9-21)
+*** Ch. 9 Discussion
+p
+** C10 Test Management
+- Explain the benefits and drawbacks of independent testing.
+- Identify the tasks of a test manager and tester.
+- Summarize the purpose and content of a test plan.
+- Differentiate between various test strategies.
+- Give examples of potential entry and exit criteria.
+- Apply knowledge of prioritization, and technical and logical dependencies, to schedule test execution for a given set of test cases.
+- Identify factors that influence the effort related to testing.
+- Explain the difference between two estimation techniques: the metrics-based
+technique and the expert-based technique.
+- Recall metrics used for testing.
+- Summarize the purposes, contents, and audiences for test reports.
+- Summarize how configuration management supports testing.
+- Define risk level by using likelihood and impact.
+- Distinguish between project and product risks.
+- Describe, by using examples, how product risk analysis may influence the thoroughness and scope of testing.
+- Write a defect report, covering defects found during testing.
+*** Ch. 10 ISO/IEC/IEEE 29119-3:2013: Test Documentation (10-17)
+~SKIP!~
+*** Ch. 10 Test maangement
+- Different models of separating development and testing:
+  - The development team is also responsible for testing.
+    - Developer tests their own development results.
+  - The developers are responsible for testing each other.
+    - Developers test each other􏰍s programs. (“Buddy testing”)
+  - Some testers are part of the development team.
+    - These testers do all the test work within the development team and are part of the development team, e.g. might also do some development work if there is currently nothing to test.
+  - A dedicated testing team is part of the project. 􏰀
+    -  Not involved in development, only in testing.
+  - Several dedicated testing teams for different testing tasks.
+    - E.g. one team for functional testing, one for performance, one for security, etc.
+  - A separate organisation is responsible for testing.
+    - The company's test department, external contractors, or test labs do the testing of a project (outsourcing).
+**** Appropriateness of test organisation models for the different test levels
+[[./img/testLevelAssignments.png][test level delagation]]
+
+**** Roles within test teams
+- Test manager (also known as test leader/coordinator),
+- Test designer (also known as test analyst),
+- Test automation expert,
+- Test administrator,
+- Tester.
+***** more detailed explination of each role in slides 10-13
+
+**** Test management
+- Testing should not be the only measure for quality management.
+  - Software Quality Management
+- The overall planning of quality assurance measures (reviews, metrics, tests, etc.) is documented in a quality assurance plan.
+- However, the detailed testing activities are documented in a separate test plan.
+- Typically, the test plan references further test documents, e.g. actual test cases.
+- Test planning in the past covered by IEEE standards (730 & 829).
+- Have now been superseded by ISO/IEC/IEEE 29119 standard series.
+
+**** test plan typical contents
+slide 15
+
+**** test strategy
+- Test strategy provides a generalized high-level description of a test process (what guides testing).
+- Test approach tailors test strategy for a particular project or release:
+  - test techniques (“how to test”),
+  - test levels and test types (“what to test”),
+  -  defining the entry criteria (=“definition of ready”) and exit criteria (=“definition of done”).
+
+**** Test Execution Schedule
+Test cases of a test suites need to be arranged in a test execution schedule.
+- Prioritization (next slide),
+- Dependencies between tests,
+- Confirmation tests,
+- Regression tests,
+- Most efficient sequence
+
+**** Costs of defects
+Costs of defects are lower when detected earlier and grow rapidly with time.
+
+- Direct defect costs: costs due to failure of the insufficiently tested SW during operation. 
+  - (Depends on contract, who has to pay for failures affecting operation.)
+- Indirect defect costs: costs due to the fact that a customer is dissatisfied:
+  - More support by vendor may be required.
+  - Vendor will get a bad reputation and not be able to acquire further projects.
+- Costs for defect correction: costs caused at vendor for defect correction:
+  - Defect analysis and correction, re-testing, new installation at customer, etc.
+
+*** Ch. 10 Test Pyramid: Extent of Testing at Different Test Levels (10-32)
+[[./img/testPyramid.png][test pyramid]]
+
+*** Ch. 10 Incident/Defect Management
+Incidents/defects can be reported by all involved persons: Testers, developers, managers, users, customers, etc.
+
+- Incident reports may refer to e.g.
+  - Defects spotted during review,
+  - Failures of the implementation observed during testing,
+  - Issues with a test case,
+  - Failures observed by end users during operation,
+  - Errors in documents (specification, models, user manual, etc.),
+  - Requests of enhancing the functionality.
+
+- How to write an incident/defect report:
+  - Concise and (if it refers to a failure) allow to reproduce the failure! (A report of a non reproducible failure is almost worthless.)
+    - Step-by-step instructions of how to reveal the failure.
+    - Error-messages (screen-shots, stack-trace of an exception, etc.)
+    - Description of the environment (version of test object, operating system, hardware, etc.)
+
+**** Incident/Defect Management Tools
+- GitLab: list of open issues
+
+*** Ch. 10 GitLab issue tracker demo (from SQM course) (10-49/10-50)
+*** Ch. 10 Traceability (10-51 to 10-53)
+**** Test Management Tools
+The most frequently used test tool is a spreadsheet...
+[[./img/tmTool1.png][excel test management]]
+*** Ch. 10 Sample Test Management Tools (10-55)
