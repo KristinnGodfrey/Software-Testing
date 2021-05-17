@@ -12,7 +12,7 @@ Reason about which integration test strategy requires least efforts which is mai
 ** Notes
 - Groups of components are tested systematically to identify problems in the interaction of components.
 - Tests correct collaboration of components, i.e. faults in interfaces and interaction of components.
-[[img/integration.png][integration testing]]
+[[../img/integration.png][integration testing]]
 
 **** Ch. 2 Integration Test Top Down (2-38 to 2-39)
 - We can use stubs for sub-modules that arent ready.
