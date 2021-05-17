@@ -14,8 +14,8 @@ Create positive and negative logical and concrete test cases for testing a funct
 |  7 |     2 | Permutation of 4                                                    |   110 |  170 |     100 |   -20 | Exception     |
 |  8 |     2 | Check if angle modulus 180 degrees is equal to 0                    |   180 |  100 |      20 |    60 | Exception     |
 |  9 |     2 | Permutation of 8                                                    |    60 |  180 |     100 |    20 | Exception     |
-| 10 |     2 | Permutation of 8                                                    |    20 |   60 |     170 |   100 | Exception     |
-| 11 |     2 | Permutation of 8                                                    |   100 |   20 |      60 |   170 | Exception     |
+| 10 |     2 | Permutation of 8                                                    |    20 |   60 |     180 |   100 | Exception     |
+| 11 |     2 | Permutation of 8                                                    |   100 |   20 |      60 |   180 | Exception     |
 | 12 |     2 | Check if angle of corner is zero degrees                            |     0 |  110 |     170 |    80 | Exception     |
 | 13 |     2 | Permutation of 12                                                   |    80 |    0 |     110 |   170 | Exception     |
 | 14 |     2 | Permutation of 12                                                   |   170 |   80 |       0 |   110 | Exception     |
