@@ -1,0 +1,110 @@
+* Objectives:
+Train creating and annotating CFGs with def/use, achieving CFG-based and data-flow-based coverage, using Cyclomatic number as upper bound for branch coverage.Consider the Java method search below.
+
+- 1. Draw the control-flow graph (CFG) of method search.  
+- 2. Enumerate (using a sequence of node numbers) CFG paths that you need to get 100% statement coverage.
+- 3. Enumerate additional CFG paths that you need to get 100% branch coverage.
+- 4. What is the upper bound of the number test cases needed to achieve branch coverage?
+- 5. Enumerate additional CFG paths that you need to get 100% boundary-interior pathcoverage (i.e. exterior path, boundary path, interior path) if you have already 100% branch coverage.
+- 6. What is the number of different paths that are possible through the CFG depending onthe number of iterations? Provide the number as a function of parameter length, i.e.number of paths when doing exactly length iterations.
+- 7. Add defs/uses annotations to your CFG and check (and justify) whether all p-uses criterion is achieved by using your paths from 100% branch coverage.  
+
+#+begin_src java
+  int search(int[] array, int length, int searchItem) {
+      int foundIndex = -1;
+      for(int i=0; i<length; i++) {
+          if(array[i] == searchItem) {
+              foundIndex = i;
+          }        
+      }
+      return foundIndex;
+  }
+#+end_src
+
+* Solution
+** 1. CFG
+[[../img/CFG2.png]]
+
+** 2. Paths / statement coverage
+|        Path 1 | Path 2 | Path 3 |
+|             1 | None   | None   |
+|             2 |        |        |
+|         3init |        |        |
+|         3cond |        |        |
+|             4 |        |        |
+|             5 |        |        |
+|             6 |        |        |
+|             7 |        |        |
+|         3incr |        |        |
+|         3cond |        |        |
+|             8 |        |        |
+| (=enter THEN) |        |        |
+
+** 3. Additional paths / branch coverage
+
+|        Path 2 | Path 2 | Path 3 |
+|             1 | None   | None   |
+|             2 |        |        |
+|         3init |        |        |
+|         3cond |        |        |
+|             4 |        |        |
+|             6 |        |        |
+|             7 |        |        |
+|         3incr |        |        |
+|         3cond |        |        |
+|             8 |        |        |
+| (=enter THEN) |        |        |
+
+** 4. Upper bound #paths branch coverage
+**** formula:
+edges - nodes + 2
+**** outcome:
+11 - 10 + 2 = 3
+** 5. Additional paths for boundary-interior path coverage
+
+| Exterior path | Boundary path | Interior path |
+|             1 |             1 |             1 |
+|             2 |             2 |             2 |
+|         3init |         3init |         3init |
+|         3cond |         3cond |         3cond |
+|             8 |             4 |             4 |
+|               |             5 |             5 |
+|               |             6 |             6 |
+|               |             7 |             7 |
+|               |         3incr |         3incr |
+|               |         3cond |         3cond |
+|               |             8 |             4 |
+|               |               |             5 |
+|               |               |             6 |
+|               |               |             7 |
+|               |               |         3incr |
+|               |               |         3cond |
+|               |               |             8 |
+
+** 6. Number of paths as a function of length
+**** formula:
+2^(length)
+**** outcome
+we can see length in our for loop
+
+** 7. def/use annotation
+
+|    | array[]     | length      | searchItem | foundIndex | i | array[j]    |
+|----+-------------+-------------+------------+------------+---+-------------|
+|  1 | def         | def         | def        |            |   | def         |
+|  2 |             |             | def        |            |   |             |
+|  3 |             |             |            | def        |   |             |
+|  4 | 3->4: p-use |             |            | 3-4: p-use |   |             |
+|    | 3->8: p-use |             |            | 3-8: p-use |   |             |
+|  5 |             | 4->5: p-use |            | c-use      |   | 4->5: p-use |
+|    |             | 4->6: p-use |            |            |   | 4->6: p-use |
+|  6 |             |             |            | c-use      |   |             |
+|    |             |             | def        |            |   |             |
+|  7 |             |             |            |            |   |             |
+|  8 |             |             |            |            |   |             |
+|  9 |             |             |            | c-use      |   |             |
+|    |             |             |            | def        |   |             |
+| 10 |             |             | c-use      |            |   |             |
+| 11 |             |             |            |            |   |             |
+
+
