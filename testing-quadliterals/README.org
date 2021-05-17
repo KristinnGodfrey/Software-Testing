@@ -2,7 +2,6 @@
 Create positive and negative logical and concrete test cases for testing a function that expectsas parameters four integer values and interpretes them as the internal angle of a quadrilateral;the program is able to identify the following types of quadrilaterals:
 
 ** Table
-
 | No | Group | Logical test case                                                   | Alpha | Beta | Charlie | Delta | Output        |
 |----+-------+---------------------------------------------------------------------+-------+------+---------+-------+---------------|
 |  1 |     1 | Check if rectangle is valid                                         |    90 |   90 |      90 |    90 | rectangle     |
@@ -23,3 +22,4 @@ Create positive and negative logical and concrete test cases for testing a funct
 | 16 |     2 | Check if the sum of all the angles of corners is less than 360 deg  |   100 |  110 |      90 |    50 | Exception     |
 | 17 |     2 | Check if the sum of all the angles of the corners is more than 360° |   100 |  110 |      90 |    70 | Exception     |
 |----+-------+---------------------------------------------------------------------+-------+------+---------+-------+---------------|
+

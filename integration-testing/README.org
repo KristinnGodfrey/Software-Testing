@@ -1,0 +1,61 @@
+** Objectives:
+Reason about which integration test strategy requires least efforts which is mainly due to creation of test drivers (=easy to create)/stubs (=hard to create); Read the dependency tree/graph from a UML class diagram (including finding leaves/root of dependencies and cyclicdependencies making all members of the cycle belong to the same level). For planning integration testing, consider the following UML class diagram1of the architecture of a software under test:
+
+
+- 1. Which integration test strategy (top-down, bottom-up, big-bang) would you select for the above system? Justify your answer!
+- 2. Describe the resulting order of integration4. (Just describe the order – you do not needto write down any test cases.)
+- 3. Where do you need test drivers and/or test stubs? 
+
+*** UML Diagram
+[[../img/IntegrationTesting.png]]
+
+** Notes
+- Groups of components are tested systematically to identify problems in the interaction of components.
+- Tests correct collaboration of components, i.e. faults in interfaces and interaction of components.
+[[img/integration.png][integration testing]]
+
+**** Ch. 2 Integration Test Top Down (2-38 to 2-39)
+- We can use stubs for sub-modules that arent ready.
+  - which assures us that the unfinished sub-module is giving the right output.
+  - In general stubs are harder to create than test drivers.
+
+**** Ch. 2 Integration Test Bottom Up (2-40 to 2-41)
+- We can use drivers for parent modules that arent ready.
+  - which assures us that the unfinished parent module is giving the right output.
+  - In general stubs are harder to create than test drivers.
+
+- We can do the same for parent-module and create a driver to simulate it.
+**** Ch. 2 Integration Test Ad-hoc (2-42 to 2-43)
+- steer away from ad-hoc
+- first-come first-served
+  - test drivers and stubs needed.
+  - might create unnessesarily many doubles.
+**** Ch. 2 Integration Test Big Bang (2-42 to 2-43)
+- steer away from big-bang
+- Then we would have to wait for all sub-modules to be ready. 
+  - That is wasted time for develpopers. 
+- Difficult to trace root of a defect.
+- High likelyhood of defects.
+
+**** UML Diagrams
+When given a UML diagram we can see where to start with:
+- Top down: Which component has no arrows pointing to it?
+- Bottom down: Which component has no arrows pointing out of it?
+
+** Solution
+[[../img/IntegrationTestingSolution.png]]
+*** 1. Which integration test strategy would you select
+bottom-up: Big-bang to be avoided. No stubs, creating them requires more effort than test drivers needed for bottom-up, in contrast to top-down.
+
+*** 2. Describe the resulting order of integration
+| 1 | AssertionFailedError (testing it would be more or less a component test)                                                                                                                                                                                            |
+|   | First step: no earlier classes                                                                                                                                                                                                                                      |
+| 2 | Assert, TestFailure                                                                                                                                                                                                                                                 |
+|   | Classes already integrated in earlier steps: AssertionFailedError                                                                                                                                                                                                   |
+| 3 | TestCase, TestResult, includes interface Test, also a dummy subclass needed for abstract class TestCase                                                                                                                                                             |
+|   | AssertionFailedError, Assert, TestFailure                                                                                                                                                                                                                           |
+| 4 | TestSuite, TestDecorator, BaseTestRunner: the latter is abstract and thus needs a subclass, so we use already now textui. TestRunner and textswing. TestRunner (which otherwise would have been integrated in the next level only), includes interface TestListener |
+|   | AssertionFailedError, Assert, TestCase, TestResult, TestFailure, interface Test, also a dummy subclass needed for abstract class TestCase.                                                                                                                          |
+
+*** 3. Where do you need test driver and/or test stubs?
+Each time, a new class is integrated, I need a test driver for it, No stubs needed, except for abstract classes, in particular class TestCase -- for abstract class BaseTestRunner, the subclasses can be used.
