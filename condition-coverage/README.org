@@ -1,0 +1,84 @@
+* Description
+Train condition coverage-based white-box testing involving short-circuit evaluationand conditions that are not feasible. Consider the Java method classify below that performs a classification of triangles. Derive test cases based on different condition coverage criteria.
+
+** Code
+#+begin_src java
+public static int classify(int a, int b, int c) {
+    int type;
+    int help;
+    if (c<a) {  // condition 1
+        help = c;
+        c = a;
+        a = help;
+    }
+    if (c<b) {  // condition 2
+        help = c;
+        c = b;
+        b = help;
+    }
+    if (b<a) {  // condition 3
+        help = b;
+        b = a;
+        a = help;
+    }
+    // After the above lines, we have guaranteed that ((a <= b <= c))
+
+    // Classify triangle
+    if ((a<0) || (b<0) || (c<0) || ((c-a) > b)) { // Condition 4
+        type = 0;
+    }
+    else {
+        if ((a==0) || (b==0) || (c==0) || ((c-a)==b)) {  // Condition 5
+            type = 1;
+        }
+    
+        else {  
+            if ((a==b) || (b==c)) {  // Condition 6
+                if(a==c) {  // Condition 7
+                    type = 2;  // EQUILITERAL TRIANGLE
+                }
+                else {  // 
+                    type = 3;  // ISOSCELES TRIANGLE
+                }
+            }
+            else {
+                type = 4;  // SCALENE TRIANGLE
+            }
+        }
+    }
+    return type;
+}
+#+end_src
+
+* Objectives:
+** 1. 
+Assume that a minimal set of test cases for 100% branch coverage (which is in this casethe same as Decision coverage) has already been created. For which of the conditions doyou have to create additional test cases to obtain 100% Basic Condition coverage (i.e.Branch Condition Testing)? 
+
+**** Additional test cases needed for:
+- Condition 4
+- Condition 5
+- Condition 6
+
+**** Justification
+Conditions 1,2,3,7 already have 100% basic condition coverage, but 4,5,6 are composed, thus not 100% condition covered.
+
+** 2.  
+Now, consider from those conditions that you have identified in item 1. above that condition that comes first in the listing and create logical and concrete test cases toobtain 100% Basic Condition coverage (i.e. Branch Condition Testing) for that condition. Logical test cases ("-" = "Don't care" symbol, T=true, F=false).
+
+**** Logical cases needed to reach 100% basic condition coverage:
+|     | a<0 | b<0 | c<0 | (c-a)>b |
+| TC1 | T   | -   | -   | -       |
+| TC2 | F   | T   | -   | -       |
+| TC3 | F   | F   | T   | -       |
+| TC4 | F   | F   | F   | T       |
+| TC5 | F   | F   | F   | F       |
+
+Test cases that are feasible are TC1, TC4, and TC5. The other ones contradict the fact the a,b,c go sorted and need to be removed.
+
+**** concrete test cases needed to reach 100% basic condition coverage
+|     |  a | b | c |
+| TC1 | -1 | 0 | 0 |
+| TC4 |  0 | 0 | 1 |
+| TC5 |  0 | 0 | 0 |
+
+
