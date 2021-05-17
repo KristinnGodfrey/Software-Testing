@@ -1,0 +1,88 @@
+** Objectives:
+Train creating and annotating non-trivial (e.g. loops and arrays) CFGs, findingdata flow anomalies, calculating Cyclomatic complexity and level of nesting.
+
+#+begin_src java
+    void insertionSort(int array[], int size) {
+      int j;
+      int key;
+      for(int i=1; i<size; i++) {
+        j = i;
+        while ((j > 0) && (array[j-1] > key)) {
+          key = array[i]
+          array[j] = array[j-1];
+          j--;
+        }
+        array[j] = key;
+      }
+    }
+#+end_src
+
+- 1. Draw the control flow graph (CFG) of this method!  Use one node per line: a nodeshall contain the corresponding line number (splitforloops into multiple nodes suchas “4init”, “4cond”, etc.). No need to have nodes for closing brackets, unless you anyway need them, e.g., as end node or target to jump to.
+- 2. Annotate in your CFG each node that is relevant for some variablexwith it’s type ofusage:d(x),u(x), orr(x)!
+- 3. Identify anyur,du, ordddata flow anomaly that is possible alonganypath! For any identified anomaly, discuss whether it is really a problem or not!
+- 4. Calculate the McCabe Cyclomatic number v(insertionSort)!
+- 5. Determine intuitively the Cyclomatic number (based on the underlying basic idea thateach branching increments it): does it match your v(insertionSort)?
+- 6. What is the maximum level of nesting (assuming that line 1 has a nesting level of 0)?
+
+** Solution
+*** 1
+[[../img/CFG.png]]
+
+*** 2
+|       | array[] | size | j | key | i | array[j-1] | array[i] | array[j] |
+|     1 | d       | d    |   |     |   | d          | d        | d        |
+|     2 |         |      | u |     |   |            |          |          |
+|     3 |         |      |   | u   |   |            |          |          |
+| 4init |         |      |   |     | d |            |          |          |
+| 4cond |         | r    |   |     | r |            |          |          |
+|     5 |         |      | d |     | r |            |          |          |
+|     6 |         |      | r |     |   |            |          |          |
+|       | r       |      | r | r   |   | r          |          |          |
+|     7 | r       |      |   |     | r |            | r        |          |
+|       |         |      |   | d   |   |            |          |          |
+|     8 | r       |      | r |     |   | r          |          |          |
+|       | r       |      | r |     |   |            |          | d        |
+|     9 |         |      | r |     |   |            |          |          |
+|       |         |      | d |     |   |            |          |          |
+|    11 | r       |      | r | r   |   |            |          |          |
+|       |         |      |   |     |   |            |          | d        |
+| 4incr |         |      |   |     | r |            |          |          |
+|       |         |      |   |     | d |            |          |          |
+|    13 |         |      | u | u   | u |            |          |          |
+|       |         | u    |   |     |   |            |          |          |
+
+*** 3
+[[../img/anomalies.png]]
+
+| path 1       | path 2                          | path 3               | path 4       |
+| No anomalies | ur-anomalies:                   | ur-anomalies         | No anomalies |
+|              | 3: u(key), 6: r(key)            | 3: u(key), 6: r(key) |              |
+|              | 3: u(key), 11: r(key)           |                      |              |
+|              |                                 |                      |              |
+|              | dd-anomalies:                   |                      |              |
+|              | 1: d(array[j]), 11: d(array[j]) |                      |              |
+
+*** 4 
+Note: this is the ideal lower bound of different paths
+**** formula: 
+edges - nodes + 2
+**** outcome: 
+14 - 13 + 2 = 3
+
+*** 5
+Note: this is the ideal upper bound of test cases
+**** formula: 
+- sequential behaviour v(G)=1, each branch: V(G) = V(G)+1
+- reason: a branch adds one node, but two edges
+**** outcome:
+- for loop adds eachs a branch +1
+- while llops adds a branch +1
+- intuative v(G)=3
+
+*** 6
+- Line 1: nesting level 0
+- Line 2: nesting level 1
+- Line 5: nesting level 2
+- Line 7: nesting level 3
+
+
